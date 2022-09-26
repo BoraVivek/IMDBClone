@@ -3,7 +3,8 @@
     let favouriteMovies = window.localStorage.getItem('favourite-movies') || [];
     const moviesList = document.querySelector("#movies-list");
     const searchBox = document.querySelector('#search_box');
-    const searchResults = [];
+    let searchResults = [];
+    const searchResultContainer = document.querySelector('#search-results');
 
     const API_URL = "http://www.omdbapi.com";
     const API_KEY = 'f3096691';
@@ -63,11 +64,24 @@
 
     async function searchMovie(e){
         console.log("Searching Movie...", e.target.value);
+        searchResults = [];
+        searchResultContainer.classList.add('hidden');
+        
         let searchText = e.target.value;
         const response = await fetch(`${API_URL}/?apikey=${API_KEY}&s=${searchText}&type=movie`);
         const data = await response.json();
 
+        if(data.Response != 'False'){
+            searchResults.push(...data.Search);
+        }
+
+        if(searchResults.length > 0){
+            searchResultContainer.classList.remove('hidden');
+        }
+
         console.log("Search Data", data);
+        console.log("Search Results", searchResults);
+
     }
 
     function removeFromFavourite(movie) {

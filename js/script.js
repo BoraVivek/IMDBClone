@@ -12,7 +12,17 @@
 
     function addMovie(movie) {
         movies.push(movie);
+        //Adding movie to the DOM
+        addMovieToDOM(movie);
         updateLocalStorageMovies();
+    }
+
+    function updateMovies(moviesList){
+        if(moviesList.length >= 0){
+            movies = moviesList;
+
+            updateLocalStorageMovies();
+        }
     }
 
     function updateLocalStorageMovies() {
@@ -47,8 +57,8 @@
             </div>
 
             <div class="movie-options flex gap-2 justify-end">
-                <button class="bg-slate-900 text-white px-2 py-1 rounded"> <i class="far fa-heart"></i> Add to Favourites</button>
-                <button class="bg-red-800 text-white px-2 py-1 rounded"><i class="fas fa-trash"></i> Delete</button>
+                <button class="bg-slate-900 text-white px-2 py-1 rounded addFavourite"data-movieid="${movie.id}"> <i class="far fa-heart pointer-events-none"></i> Add to Favourites</button>
+                <button class="bg-red-800 text-white px-2 py-1 rounded deleteMovie" data-movieid="${movie.id}"><i class="fas fa-trash pointer-events-none"></i> Delete</button>
             </div>
         </div>
         `;
@@ -56,8 +66,21 @@
         moviesList.append(article);
     }
 
-    function removeMovie(movie) {
+    function removeMovieFromDom(movieId) {
+        let movieElement = document.querySelector(`#movie-${movieId}`);
+        if(!movieElement){
+            alert("No Movie Found with this ID");
+            return;
+        }
 
+        movieElement.remove();
+    }
+
+    function deleteMovie(movieId){
+        let leftMovies = movies.filter((movie) => movie.id != movieId);
+        updateMovies(leftMovies);
+
+        removeMovieFromDom(movieId);
     }
 
     function addToFavourite(movie) {
@@ -123,13 +146,14 @@
             return;
         }
 
+        /** Check if movie already present with that MovieID to prevent duplicates */
         let movieExists = movies.find((movie) => movie.id == movieId);
-
-        if(movieExists){
+        if (movieExists) {
             alert("Movie Already Exists!");
             return;
         }
 
+        /** Fetch Movie Data */
         let response = await fetch(`${API_URL}/?apikey=${API_KEY}&i=${movieId}`);
         let data = await response.json();
 
@@ -152,9 +176,6 @@
 
         //Adding Movie to the Movies Array, and in the Localstorge
         addMovie(newMovie);
-
-        //Adding movie to the DOM
-        addMovieToDOM(newMovie);
     }
 
     function removeFromFavourite(movie) {
@@ -194,9 +215,6 @@
 
                 //Adding Movie to the Movies Array, and in the Localstorge
                 addMovie(newMovie);
-
-                //Adding movie to the DOM
-                addMovieToDOM(newMovie);
             })
         } else {
             /** If movies exists in localstorage, than we render them in the DOM */
@@ -208,15 +226,17 @@
 
     function handleClickEvent(e) {
         let target = e.target;
+        let movieId = target.dataset.movieid;
+        console.log("Event:", e.target);
 
-        switch (target.className) {
-            case "addMovieToList":
-                let movieId = target.dataset.movieid;
-                addMovieToList(movieId);
-                break;
-            default:
-                console.log("No Event");
-                break;
+        if(target.classList.contains('addMovieToList')){
+            addMovieToList(movieId);
+            return;
+        }
+
+        if(target.classList.contains('deleteMovie')){
+            deleteMovie(movieId);
+            return;
         }
     }
 

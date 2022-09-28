@@ -1,7 +1,6 @@
 (function () {
 
     let movies = JSON.parse(window.localStorage.getItem('movies')) || [];
-    let favouriteMovies = window.localStorage.getItem('favourite-movies') || [];
     const moviesList = document.querySelector("#movies-list");
     const searchBox = document.querySelector('#search_box');
     let searchResults = [];
@@ -26,9 +25,10 @@
     }
 
     function updateLocalStorageMovies() {
-        console.log(movies);
         window.localStorage.setItem('movies', JSON.stringify(movies));
     }
+    
+
 
     function addMovieToDOM(movie) {
         const article = document.createElement('article');
@@ -57,7 +57,7 @@
             </div>
 
             <div class="movie-options flex gap-2 justify-end">
-                <button class="bg-slate-900 text-white px-2 py-1 rounded addFavourite"data-movieid="${movie.id}"> <i class="far fa-heart pointer-events-none"></i> Add to Favourites</button>
+                <button class='${movie.favourite ? 'bg-red-800' : 'bg-slate-900'} text-white px-2 py-1 rounded toggleFavourite' data-movieid='${movie.id}'> <i class='far fa-heart pointer-events-none'></i> ${movie.favourite ? 'Remove from Favourite' : 'Add to Favourite'}</button>
                 <button class="bg-red-800 text-white px-2 py-1 rounded deleteMovie" data-movieid="${movie.id}"><i class="fas fa-trash pointer-events-none"></i> Delete</button>
             </div>
         </div>
@@ -83,8 +83,32 @@
         removeMovieFromDom(movieId);
     }
 
-    function addToFavourite(movie) {
+    function toggleFavourite(movieId) {
+        isFavourite = false;
+        movies.map((movie) => {
+            if(movie.id == movieId){
+                movie.favourite = !movie.favourite;
+                isFavourite = movie.favourite;
+            }
+            return movie;
+        })
 
+        let movieElement = document.querySelector(`#movie-${movieId} .toggleFavourite`);
+        if(isFavourite){
+            movieElement.classList.remove("bg-slate-900");
+            movieElement.classList.add("bg-red-800");
+            movieElement.innerHTML=`
+                <i class="fas fa-heart pointer-events-none"></i> Remove from Favourite
+            `;
+        }else{
+            movieElement.classList.remove("bg-red-800");
+            movieElement.classList.add("bg-slate-900");
+            movieElement.innerHTML=`
+                <i class="far fa-heart pointer-events-none"></i> Add to Favourite
+            `;
+        }
+
+        updateMovies(movies);
     }
 
     async function searchMovie(e) {
@@ -135,10 +159,6 @@
         searchResultContainer.append(div);
     }
 
-    function test() {
-        alert("Hello");
-    }
-
     /** Function to add Movie to the list from the search results */
     async function addMovieToList(movieId) {
         console.log("Movie ID:", movieId);
@@ -171,18 +191,16 @@
             plot: data.Plot,
             poster: data.Poster,
             imdbRating: data.imdbRating,
-            rottenTomatoes: data.Ratings.find((rating) => rating.Source == 'Rotten Tomatoes')?.Value || "N/A"
+            rottenTomatoes: data.Ratings.find((rating) => rating.Source == 'Rotten Tomatoes')?.Value || "N/A",
+            favourite: false
         }
 
         //Adding Movie to the Movies Array, and in the Localstorge
         addMovie(newMovie);
     }
 
-    function removeFromFavourite(movie) {
 
-    }
-
-    /** Function to load initial movies */
+    /** Function to load initial movies when the movies list is empty */
     function loadInitialMovies() {
         console.log("Loading Movies...");
         console.log("Movies", movies);
@@ -210,7 +228,8 @@
                     plot: data.Plot,
                     poster: data.Poster,
                     imdbRating: data.imdbRating,
-                    rottenTomatoes: data.Ratings.find((rating) => rating.Source == 'Rotten Tomatoes').Value
+                    rottenTomatoes: data.Ratings.find((rating) => rating.Source == 'Rotten Tomatoes').Value,
+                    favourite: false,
                 }
 
                 //Adding Movie to the Movies Array, and in the Localstorge
@@ -224,18 +243,27 @@
         }
     }
 
+    // Function to handle Click Events
     function handleClickEvent(e) {
         let target = e.target;
         let movieId = target.dataset.movieid;
         console.log("Event:", e.target);
 
+        // Handles Add Movie to List
         if(target.classList.contains('addMovieToList')){
             addMovieToList(movieId);
             return;
         }
 
+        // Handles Delete Movie Click
         if(target.classList.contains('deleteMovie')){
             deleteMovie(movieId);
+            return;
+        }
+
+        // Handles Toggle Favourite Click
+        if(target.classList.contains("toggleFavourite")){
+            toggleFavourite(movieId);
             return;
         }
     }

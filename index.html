@@ -5,50 +5,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMDB Clone By Vivek Bora</title>
+    <title>Homepage | IMDB Clone By Vivek Bora</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script defer src="./js//script.js"></script>
+    
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body class="from-gray-900 to-gray-600 bg-gradient-to-r flex flex-col min-h-screen">
     <!-- Displays Top Navbar -->
     <header class="bg-slate-600 h-16">
         <div class="header-content flex justify-between w-[80%] m-auto items-center h-16">
+            <!-- Logo -->
             <div class="text-white">
                 iMDB
             </div>
+
+            <!-- Search Container -->
             <div class="search_container relative h-10 z-10">
+                <!-- Search Box -->
                 <input type="search" name="search_box" id="search_box" results="5"
                     class="bg-slate-800 text-white py-2 px-4 rounded w-80 h-10" placeholder="Search Movie...">
-                <div id="search-results" class="search-results h-52 mt-1 rounded w-full hidden bg-slate-800 opacity-95 ">
-                    <div class="search-item flex p-2 gap-3 text-white mb-10 border-b-2">
-                        <img src="https://m.media-amazon.com/images/M/MV5BZjY2MmI1ZWItNmU0Yy00NTdkLWJiYmQtNzFlZWNlMzkxZTZjXkEyXkFqcGdeQXVyNjkwOTg4MTA@._V1_SX300.jpg" 
-                            alt="Brahmastra" class="h-24 rounded">
-                        <div class="movie-info">
-                            <div class="movie-title text-lg" title="Movie Title">Brahmastra</div>
-                            <div class="movie-year" title="Release Year">2022</div>
-                        </div>
-                    </div>
+
+                <!-- Search Results Container, hidden by default -->
+                <div id="search-results"
+                    class="search-results h-52 w-80 mt-1 rounded hidden bg-slate-800 opacity-95 overflow-y-scroll">
+
                 </div>
             </div>
         </div>
     </header>
-    <main class="movies-list w-[80%] mx-auto mt-6 mb-6 bg-slate-500 p-5 rounded flex flex-col gap-5" id="movies-list">
 
+    <!-- Main Section : Contains Movie List -->
+    <main class="movies-list w-[80%] mx-auto mt-6 mb-6 bg-slate-500 p-5 rounded flex flex-col gap-5" id="movies-list">
+        <button onclick="test">Test</button>
     </main>
+
+    <!-- Footer -->
     <footer class="bg-slate-600 mt-auto text-white h-10 flex items-center">
         <div class="footer-content  flex justify-between w-[80%] m-auto">
+            <!-- Copyright -->
             <div class="copyright">
                 2022, &copy; All rights reserved.
             </div>
+
+            <!-- Credits -->
             <div class="made_by">
-                Made By Vivek Bora
+                Made By <a href="https://www.linkedin.com/in/boravivek/" class="text-slate-900 font-bold"
+                    target="_blank">Vivek Bora</a>
             </div>
         </div>
     </footer>
+
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

@@ -19,8 +19,12 @@
     <header class="bg-slate-600 h-16">
         <div class="header-content flex justify-between w-[80%] m-auto items-center h-16">
             <!-- Logo -->
-            <div class="text-white">
-                iMDB
+            <div class="text-white flex items-center gap-20">
+                <a href="./index.html" class="font-mono text-lg">IMDB Clone</a>
+                <div class="header_menu flex gap-5 items-center">
+                    <a href="./index.html" id="home-link" class="hover:text-slate-800 hover:bg-slate-400 hover:px-2 hover:py-1 hover:rounded transition-all">Home</a>
+                    <a href="./favourites.html" id="favourite-link" class="text-slate-800 bg-slate-400 px-2 py-1 rounded">Favourites</a>
+                </div>
             </div>
 
             <!-- Search Container -->
@@ -39,9 +43,9 @@
     </header>
 
     <!-- Main Section : Contains Movie List -->
-    <main class="favourite-movies-list w-[80%] mx-auto mt-6 mb-6 bg-slate-500 p-5 rounded flex flex-col gap-5"
+    <main class="favourite-movies-list w-[80%] mx-auto mt-6 mb-6 bg-slate-500 text-white p-5 rounded flex flex-col gap-5"
         id="favourite-movies-list">
-
+        
     </main>
 
     <!-- Footer -->
@@ -66,9 +70,11 @@
     <script>
         /** Initialize Application */
         function initializeFavouriteApp() {
-            loadFavouriteMovies();
-            searchBox.addEventListener("change", searchMovie); //Adding onChange event to searchBox for handling search 
-            document.addEventListener("click", handleClickEvent);
+            let favourite = new Favourite();
+            favourite.loadFavouriteMovies();
+            favourite.searchBox.addEventListener("change", favourite.searchMovie.bind(favourite)); //Adding onChange event to searchBox for handling search 
+            document.addEventListener("click", favourite.handleClickEvent.bind(favourite));
+
         }
 
         initializeFavouriteApp();

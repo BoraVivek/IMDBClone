@@ -68,7 +68,7 @@ class Movies {
         domElement.append(article);
     }
 
-    removeMovieFromDom() {
+    removeMovieFromDom(movieId) {
         let movieElement = document.querySelector(`#movie-${movieId}`);
         if (!movieElement) {
             alert("No Movie Found with this ID");
@@ -151,16 +151,20 @@ class Movies {
                     <div class="movie-year text-sm text-gray-400" title="Release Year">${movie.Year}</div>
                 </div>
             </div>
-            <button class='addMovieToList' data-movieId=${movie.imdbID}>
-                <i class="fas fa-plus-circle text-2xl pointer-events-none" title="Add Movie to List"></i>
-            </button>
+           <div class='flex flex-col'>
+                <button class='addMovieToList' title='Add Movie to List' data-movieId=${movie.imdbID}>
+                    <i class="fas fa-plus-circle text-2xl pointer-events-none" title="Add Movie to List"></i>
+                </button>
+                <button class='addMovieToFavourite' title='Add Movie to Favourites' data-movieId=${movie.imdbID}>
+                    <i class="fas fa-heart text-2xl pointer-events-none text-red-600" title="Add Movie to List"></i>
+                </button>
+           </div>
         `;
 
         this.searchResultContainer.append(div);
     }
 
-    /** Function to add Movie to the list from the search results */
-    async addMovieToList(movieId) {
+    async fetchMovieToAdd(movieId){
         console.log("Movie ID:", movieId);
         if (!movieId) {
             return;
@@ -195,8 +199,29 @@ class Movies {
             favourite: false
         }
 
+        return newMovie;
+    }
+
+    /** Function to add Movie to the list from the search results */
+    async addMovieToList(movieId) {
+        let newMovie = await this.fetchMovieToAdd(movieId);
+
         //Adding Movie to the Movies Array, and in the Localstorge
         this.addMovie(newMovie);
+
+        alert("Movie Added to List");
+    }
+
+    /** Function to add Movie to the list from the search results */
+    async addMovieToFavourite(movieId) {
+        let newMovie = await this.fetchMovieToAdd(movieId);
+
+        newMovie.favourite = true;
+
+        //Adding Movie to the Movies Array, and in the Localstorge
+        this.addMovie(newMovie);
+
+        alert("Movie Added to Favourites");
     }
 
     /** Function to load initial movies when the movies list is empty */
@@ -251,6 +276,12 @@ class Movies {
         // Handles Add Movie to List
         if (target.classList.contains('addMovieToList')) {
             this.addMovieToList(movieId);
+            return;
+        }
+
+        // Handles Add Movie to Favourite
+        if (target.classList.contains('addMovieToFavourite')) {
+            this.addMovieToFavourite(movieId);
             return;
         }
 

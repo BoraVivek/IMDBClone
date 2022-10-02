@@ -1,12 +1,31 @@
-class Favourite extends Movies{
+class Favourite extends Movies {
 
-    constructor(){
+    constructor() {
         super();
         this.favouriteMovies = this.movies.filter((movie) => movie.favourite == true)
         this.favouriteMoviesList = document.querySelector("#favourite-movies-list");
     }
 
-    loadFavouriteMovies(){
-        
+    // Loads Favourite Movies to the DOM
+    loadFavouriteMovies() {
+        // If no favourite movies, display a message for the same
+        if (this.favouriteMovies.length == 0) {
+            this.favouriteMoviesList.append("No Favourite Movies to Show...");
+        }
+
+        // Loop through all movies, add them to the DOM
+        this.favouriteMovies.forEach((movie) => {
+            this.addMovieToDOM(this.favouriteMoviesList, movie);
+        })
     }
+
+    //Overriding ToggleFavourite Method on Favourite Class
+    toggleFavourite(movieId) {
+        super.toggleFavourite(movieId);
+
+        // Refreshing the page when a movie is removed from Favourites
+        location.reload();
+    }
+
+
 }

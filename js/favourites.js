@@ -1,2 +1,12 @@
+class Favourite extends Movies{
 
-const moviesList = document.querySelector("#favourite-movies-list");
+    constructor(){
+        super();
+        this.favouriteMovies = this.movies.filter((movie) => movie.favourite == true)
+        this.favouriteMoviesList = document.querySelector("#favourite-movies-list");
+    }
+
+    loadFavouriteMovies(){
+        
+    }
+}

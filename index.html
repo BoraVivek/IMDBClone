@@ -63,9 +63,10 @@
     <script>
         /** Initialize Application */
         function initializeApp() {
-            loadInitialMovies();
-            searchBox.addEventListener("change", searchMovie); //Adding onChange event to searchBox for handling search 
-            document.addEventListener("click", handleClickEvent);
+            let movies = new Movies();
+            movies.loadInitialMovies();
+            movies.searchBox.addEventListener("change", movies.searchMovie.bind(movies)); //Adding onChange event to searchBox for handling search 
+            document.addEventListener("click", movies.handleClickEvent.bind(movies));
         }
 
         initializeApp();

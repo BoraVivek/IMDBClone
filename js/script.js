@@ -9,7 +9,7 @@ class Movies {
         this.searchResults = [];
         this.searchResultContainer = document.querySelector('#search-results');
 
-        this.API_URL = "http://www.omdbapi.com/?apikey=f3096691";
+        this.API_URL = "https://www.omdbapi.com/?apikey=f3096691";
     }
 
     // Function to Add Movie to DOM and Update on LocalStorage

@@ -1,5 +1,6 @@
 class Favourite extends Movies {
 
+    // Favourite Constructor
     constructor() {
         super();
         this.favouriteMovies = this.movies.filter((movie) => movie.favourite == true)
@@ -24,6 +25,13 @@ class Favourite extends Movies {
         super.toggleFavourite(movieId);
 
         // Refreshing the page when a movie is removed from Favourites
+        location.reload();
+    }
+
+    // Overriding delete movie function to reload the page on delete
+    deleteMovie(movieId){
+        super.deleteMovie(movieId);
+
         location.reload();
     }
 

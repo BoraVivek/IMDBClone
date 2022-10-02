@@ -57,7 +57,7 @@
             </div>
 
             <div class="movie-options flex gap-2 justify-end">
-                <button class='${movie.favourite ? 'bg-red-800' : 'bg-slate-900'} text-white px-2 py-1 rounded toggleFavourite' data-movieid='${movie.id}'> <i class='far fa-heart pointer-events-none'></i> ${movie.favourite ? 'Remove from Favourite' : 'Add to Favourite'}</button>
+                <button class='${movie.favourite ? 'bg-red-800' : 'bg-slate-900'} text-white px-2 py-1 rounded toggleFavourite' data-movieid='${movie.id}'> <i class='${movie.favourite ? 'fas' : 'far'} fa-heart pointer-events-none'></i> ${movie.favourite ? 'Remove from Favourite' : 'Add to Favourite'}</button>
                 <button class="bg-red-800 text-white px-2 py-1 rounded deleteMovie" data-movieid="${movie.id}"><i class="fas fa-trash pointer-events-none"></i> Delete</button>
             </div>
         </div>

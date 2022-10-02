@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage | IMDB Clone By Vivek Bora</title>
+    <title>Favourites Page | IMDB Clone By Vivek Bora</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
@@ -39,7 +39,8 @@
     </header>
 
     <!-- Main Section : Contains Movie List -->
-    <main class="movies-list w-[80%] mx-auto mt-6 mb-6 bg-slate-500 p-5 rounded flex flex-col gap-5" id="movies-list">
+    <main class="favourite-movies-list w-[80%] mx-auto mt-6 mb-6 bg-slate-500 p-5 rounded flex flex-col gap-5"
+        id="favourite-movies-list">
 
     </main>
 
@@ -59,16 +60,17 @@
         </div>
     </footer>
 
+    <script src="./js/favourites.js"></script>
     <script src="./js/script.js"></script>
     <script>
         /** Initialize Application */
-        function initializeApp() {
-            loadInitialMovies();
+        function initializeFavouriteApp() {
+            loadFavouriteMovies();
             searchBox.addEventListener("change", searchMovie); //Adding onChange event to searchBox for handling search 
             document.addEventListener("click", handleClickEvent);
         }
 
-        initializeApp();
+        initializeFavouriteApp();
     </script>
 </body>
 

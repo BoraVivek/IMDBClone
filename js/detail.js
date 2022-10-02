@@ -21,22 +21,28 @@ class Detail extends Movies {
             return;
         }
 
-         /** Check if movie already present with that MovieID  */
-         let movieExists = this.movies.find((movie) => movie.id == movieId);
-         if (movieExists) {
-             return movieExists;
-         }
+        let newMovie = {};
 
         /** Fetch Movie Data */
         let response = await fetch(`${this.API_URL}&i=${movieId}&plot=full`);
         let data = await response.json();
 
+         /** Check if movie already present with that MovieID  */
+         let movieExists = this.movies.find((movie) => movie.id == movieId);
+         if (movieExists) {
+             newMovie = movieExists;
+             newMovie.plot = data.Plot;
+
+             return newMovie;
+         }
+
+        
         if (data.Response == 'False') {
             return;
         }
 
         //Creating new Movie Object
-        let newMovie = {
+        newMovie = {
             id: data.imdbID,
             title: data.Title,
             year: data.Year,

@@ -36,7 +36,7 @@ class Movies {
     // Function to add Movie to DOM
     addMovieToDOM(domElement, movie) {
         const article = document.createElement('article');
-        article.classList.add('movie', 'flex', 'relative', 'gap-2', 'pb-5', 'border-b-2');
+        article.classList.add('movie', 'md:flex', 'md:flex-row','flex-col', 'relative', 'md:gap-2', 'gap-5', 'pb-5', 'border-b-2');
         article.id = `movie-${movie.id}`;
         article.innerHTML = `
             <div class="image-poster relative h-52">
@@ -44,16 +44,16 @@ class Movies {
                     <img src="${movie.poster}"
                         alt="${movie.title}" class="h-52 w-auto hover:scale-110 transition-all duration-300">
                 </a>
-                <div class="movie-runtime absolute bottom-0 right-0 px-2 rounded-tl-md bg-gray-600 opacity-80 text-white"
+                <div class="movie-runtime absolute bottom-0 left-0 px-2 rounded-tr-md bg-gray-600 opacity-80 text-white"
                     title="Movie Runtime">${movie.runTime}</div>
-                <div class="movie-year absolute top-0 right-0 px-1 bg-cyan-700 text-white rounded-bl-md bg-opacity-95"
+                <div class="movie-year absolute top-0 left-0 px-1 bg-cyan-700 text-white rounded-br-md bg-opacity-95"
                     title="Release Year">${movie.year}</div>
             </div>
-            <div class="movie-info text-white flex flex-col justify-between w-full">
+            <div class="movie-info text-white flex flex-col justify-between w-full md:mt-0 mt-2">
                 <div class="movie-detail">
                     <div class="movie-title text-3xl hover:text-slate-800 cursor-pointer" title="Movie Title"><a href="./detail.html?id=${movie.id}">${movie.title}</a></div>
                     <div class="movie-genre text-zinc-300">${movie.genre}</div>
-                    <div class="movie-plot" title="Movie Plot">
+                    <div class="movie-plot mt-5" title="Movie Plot">
                         ${movie.plot}
                     </div>
                     <div class="ratings mt-4 flex gap-5">
@@ -62,7 +62,7 @@ class Movies {
                     </div>
                 </div>
 
-                <div class="movie-options flex gap-2 justify-end">
+                <div class="movie-options flex gap-2 md:justify-end justify-center md:mt-0 mt-4">
                     <button class='${movie.favourite ? 'bg-red-800' : 'bg-slate-900'} text-white px-2 py-1 rounded toggleFavourite' data-movieid='${movie.id}'> <i class='${movie.favourite ? 'fas' : 'far'} fa-heart pointer-events-none'></i> ${movie.favourite ? 'Remove from Favourite' : 'Add to Favourite'}</button>
                     <button class="bg-red-800 text-white px-2 py-1 rounded deleteMovie" data-movieid="${movie.id}"><i class="fas fa-trash pointer-events-none"></i> Delete</button>
                 </div>

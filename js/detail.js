@@ -72,7 +72,7 @@ class Detail extends Movies {
     //Add Movies detail to DOM
     addMovieDetailToDOM(movie) {
         const article = document.createElement('article');
-        article.classList.add('movie', 'flex', 'relative', 'gap-5', 'pb-5', 'border-b-2');
+        article.classList.add('movie', 'flex-col' ,'md:flex', 'md:flex-row', 'relative', 'gap-5', 'pb-5', 'border-b-2');
         article.id = `movie-${movie.id}`;
 
         const genre = movie.genre.split(", ");
@@ -81,9 +81,9 @@ class Detail extends Movies {
 
         article.innerHTML = `
             <div class="movie-img basis-[50%]">
-                <img src="${movie.poster}" alt="${movie.title}" >
+                <img src="${movie.poster}" alt="${movie.title}" class="rounded">
             </div>
-            <div class="movie-details basis-[100%]">
+            <div class="movie-details basis-[100%] mt-4 md:mt-0">
                 <div class="movie-title text-4xl">${movie.title} (${movie.year})</div>
                 <div class="movie-genre flex gap-2 mt-2">${genre.map((g) => `<div class="bg-gray-800 px-2 py-1 text-xs rounded">${g}</div>`).join("")}</div>
                 <div class="ratings mt-2 flex gap-5">
@@ -94,12 +94,12 @@ class Detail extends Movies {
                     ${movie.plot}
                 </div>
                 ${movieExists ? 
-                    `<div class="movie-options flex gap-2 justify-end mt-8">
+                    `<div class="movie-options flex gap-2 justify-center md:justify-end mt-8">
                         <button class='${movie.favourite ? 'bg-red-800' : 'bg-slate-900'} text-white px-2 py-1 rounded toggleFavourite' data-movieid='${movie.id}'> <i class='${movie.favourite ? 'fas' : 'far'} fa-heart pointer-events-none'></i> ${movie.favourite ? 'Remove from Favourite' : 'Add to Favourite'}</button>
                         <button class="bg-red-800 text-white px-2 py-1 rounded deleteMovie" data-movieid="${movie.id}"><i class="fas fa-trash pointer-events-none"></i> Delete</button>
                     </div>` 
                     : 
-                    `<div class='flex gap-2 justify-end mt-8'>
+                    `<div class='flex gap-2 justify-center md:justify-end mt-8'>
                         <button class='bg-slate-900 addMovieToListFromDetail text-white px-2 py-1 rounded' title='Add Movie to List' data-movieid='${movie.id}'> 
                             <i class='fas fa-plus-circle pointer-events-none'></i> 
                             Add Movie to List
